@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <TodoHeader></TodoHeader>
-    <TodoInput></TodoInput>
-    <TodoList></TodoList>
-    <TodoFooter></TodoFooter>
+    <TodoInput @addTodo="addTodo"></TodoInput>
+    <TodoList :propsdata="todoItems" @removeTodo="removeTodo"></TodoList>
+    <TodoFooter @removeAll="clearAll"></TodoFooter>
   </div>
 </template>
 
@@ -17,9 +17,35 @@ export default {
   name: 'app',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      todoItems:[]
     }
   },
+  methods:{
+    addTodo(todoItem){
+      localStorage.setItem(todoItem,todoItem);
+      this.todoItems.push(todoItem);
+    },
+  
+    removeTodo(todoItem, index){
+      localStorage.removeItem(todoItem);
+      this.todoItems.splice(index, 1);
+    },
+  
+    clearAll(todoItem){
+      localStorage.clear();
+      this.todoItems = [];
+    },
+  },
+  created() {
+      if (localStorage.length > 0) {
+          for (let i = 0; i < localStorage.length; i ++) {
+              if (localStorage.key(i) !== 'loglevel:webpack-dev-server') {
+                  this.todoItems.push(localStorage.key(i));
+              }
+          }
+      }
+},
+
   components:{
     'TodoHeader' : TodoHeader,
     'TodoInput' : TodoInput,

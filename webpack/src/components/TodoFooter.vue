@@ -1,19 +1,35 @@
 <template>
-    <header>
-        <h1>footer</h1>
-    </header>
+  <div class="clearAllContainer">
+      <span class="clearAllBtn" @click="clearTodo">Clear All
+      </span>
+  </div>
 </template>
 
 <script>
-export default{
-
+export default {
+  methods: {
+    clearTodo(){
+    //   localStorage.clear();
+      this.$emit('removeAll');
+    }
+  }
 }
 </script>
 
 <style scoped>
-    h1{
-        color: black;
-        font-weight: 900;
-        margin: 2.5rem 0 1.5rem;
-    }
+.clearAllContainer {
+  width: 8.5rem;
+  height: 50px;
+  line-height: 50px;
+  background-color: white;
+  border-radius: 5px;
+  margin: 0 auto;
+}
+.clearAllBtn {
+  color: #e20303;
+  display: block;
+}
+.clearAllBtn:hover{
+    cursor:pointer;
+}
 </style>
